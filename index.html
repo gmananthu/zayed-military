@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Zayed Military University - Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    body[dir="rtl"] {
+      font-family: "Cairo", sans-serif;
+    }
+
+    .page-wrapper {
+      padding: 8px 14px 10px;
+    }
+
+    /* HEADER */
+    .header {
+      background: #fff;
+      border-radius: 8px;
+      padding: 0px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .header .logo img {
+      height: 40px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .language-dropdown {
+      position: relative;
+    }
+
+    .language-selector {
+      background: transparent;
+      border: none;
+      font-size: 13px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background 0.2s ease;
+    }
+
+    .language-selector:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .language-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      min-width: 140px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      overflow: hidden;
+    }
+
+    [dir="rtl"] .language-menu {
+      right: auto;
+      left: 0;
+    }
+
+    .language-menu.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .language-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: background 0.2s ease;
+    }
+
+    .language-option:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .language-option img {
+      width: 18px;
+      height: 18px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .language-option span {
+      font-weight: 500;
+      color: #333;
+    }
+
+    .circle-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #000;
+      color: #fff;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .enquiry-btn {
+      background: linear-gradient(to right, rgba(229, 195, 51, 1), rgba(180, 133, 44, 1));
+      border-radius: 25px;
+      padding: 8px 22px;
+      border: none;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* HERO */
+    .hero-wrapper {
+      margin-top: 10px;
+      position: relative;
+      border-radius: 20px;
+      background: #111;
+      aspect-ratio: 1420 / 296;
+      width: 100%;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('/hero.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: 20px;
+    }
+
+    .hero-left {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      padding: 36px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-left p {
+      color: #fff;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .hero-left h1 {
+      color: #fff;
+      font-size: 40px;
+      line-height: 1.1;
+      font-weight: 700;
+    }
+
+    .hero-dots {
+      position: absolute;
+      left: 26px;
+      bottom: 20px;
+      display: flex;
+      gap: 8px;
+    }
+
+    [dir="rtl"] .hero-dots {
+      left: auto;
+      right: 26px;
+    }
+
+    .hero-dot {
+      width: 50px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .hero-dot.active {
+      width: 50px;
+      background: #fff;
+    }
+
+    .hero-arrows {
+      position: absolute;
+      right: 26px;
+      bottom: 10px;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 3;
+    }
+
+    [dir="rtl"] .hero-arrows {
+      right: auto;
+      left: 26px;
+    }
+
+    .hero-arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(121, 121, 121, 1);
+      color: #fff;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .hero-arrow.gold {
+      background: linear-gradient(to right, rgba(229, 195, 51, 1), rgba(180, 133, 44, 1));
+      color: #fff;
+    }
+
+    .applications-btn {
+      position: absolute;
+      bottom: 0px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #027C3C;
+      border-radius: 10px;
+      padding: 10px 32px;
+      border: none;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .applications-btn::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -10px;
+      z-index: 1000;
+      width: 0;
+      height: 0;
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;
+      border-top: 11px solid #027C3C;
+    }
+
+    /* QUICK APPS */
+    .quick-strip {
+      margin-top: 24px;
+      padding: 0px 24px;
+      display: grid;
+      grid-template-columns: 40px 1fr 40px;
+      align-items: center;
+    }
+
+    .quick-arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid #d4af37;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #d4af37;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .quick-arrow:hover {
+      background: linear-gradient(to right, rgba(229, 195, 51, 1), rgba(180, 133, 44, 1));
+      color: #fff;
+    }
+
+    .quick-cards {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .quick-card {
+      background: rgba(245, 246, 251, 1);
+      border-radius: 14px;
+      width: 150px;
+      height: 100px;
+      box-shadow: 0px 4px 4px #00000040;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(102, 102, 102, 1);
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .quick-card:hover {
+      border: 2px solid #d4af37;
+      box-shadow: 0px 8px 16px rgba(212, 175, 55, 0.3);
+      background: linear-gradient(180deg, #F5F6FB 0%, #F0CF3F 100%);
+      color: #000;
+      font-weight: 600;
+    }
+
+    .quick-card:hover .quick-icon {
+      transform: scale(1.08);
+    }
+
+    .quick-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #222;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      transition: all 0.3s ease;
+    }
+
+    /* LOWER GRID */
+    .lower-grid {
+      margin-top: 24px;
+      margin-bottom: 24px;
+      display: grid;
+      grid-template-columns: 320px 1fr 320px;
+      grid-column-gap: 14px;
+      height: fit-content;
+    }
+
+    /* NOTIFICATION */
+    .notification-wrapper {
+      perspective: 1000px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .notification-flipper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+
+    .notification-wrapper.flipped .notification-flipper {
+      transform: rotateY(180deg);
+    }
+
+    .notification-card {
+      background: linear-gradient(180deg, #FFD54F 0%, #FFC947 100%);
+      border-radius: 20px;
+      padding: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .notification-front,
+    .notification-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .notification-front {
+      z-index: 2;
+      transform: rotateY(0deg);
+    }
+
+    .notification-back {
+      transform: rotateY(180deg);
+    }
+
+    .notification-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: #000000;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .notification-content {
+      background: radial-gradient(circle at 50% -4%, transparent 40px, white 40px);
+      border-radius: 16px;
+      padding: 55px 20px 20px;
+      text-align: center;
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      position: relative;
+      margin-top: -38px;
+    }
+
+    .notification-content h6 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #000000;
+      margin: 0 0 16px 0;
+      line-height: 1.4;
+    }
+
+    .notification-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #1B854F;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 auto 16px;
+      box-shadow: 0 2px 6px rgba(27, 133, 79, 0.3);
+    }
+
+    .view-notifications-btn {
+      width: 100%;
+      border-radius: 25px;
+      border: none;
+      background: #000000;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 12px 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .view-notifications-btn:hover {
+      background: #1a1a1a;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .notifications-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+      flex-shrink: 0;
+    }
+
+    .notifications-header h6 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #000000;
+      margin: 0;
+    }
+
+    .back-btn {
+      width: 46px;
+      height: 22px;
+      border-radius: 30px;
+      background: #000000;
+      color: #ffffff;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: #1a1a1a;
+      transform: rotate(-360deg);
+    }
+
+    .notifications-list {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 8px;
+      flex: 1;
+      overflow-y: auto;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      min-height: 0;
+    }
+
+    .notification-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 6px;
+      border-bottom: 1px solid #f0f0f0;
+      transition: background 0.2s ease;
+    }
+
+    .notification-item:last-child {
+      border-bottom: none;
+    }
+
+    .notification-item:hover {
+      background: #f8f8f8;
+      border-radius: 8px;
+    }
+
+    .notif-icon-small {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #000000;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .notification-item span {
+      font-size: 11px;
+      color: #333333;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .notifications-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .notifications-list::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    .notifications-list::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 10px;
+    }
+
+    .notifications-list::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+
+    /* PROFILE */
+    .profile-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid #e4e4e4;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .gradient-background {
+      position: absolute;
+      top: -149px;
+      left: -106px;
+      width: 833px;
+      height: 595px;
+      opacity: 0.78;
+      pointer-events: none;
+    }
+
+    [dir="rtl"] .gradient-background {
+      left: auto;
+      right: -106px;
+    }
+
+    .gradient-yellow {
+      position: absolute;
+      top: 92px;
+      left: 206px;
+      width: 480px;
+      height: 411px;
+      background: rgba(255, 217, 81, 0.6);
+      border-radius: 50%;
+      transform: rotate(111deg);
+      filter: blur(100px);
+    }
+
+    .gradient-red {
+      position: absolute;
+      top: 217px;
+      left: 474px;
+      width: 508px;
+      height: 209px;
+      background: rgba(183, 26, 51, 0.3);
+      border-radius: 50%;
+      transform: rotate(90deg);
+      filter: blur(100px);
+    }
+
+    .gradient-green-light {
+      position: absolute;
+      top: 245px;
+      left: 54px;
+      width: 209px;
+      height: 319px;
+      background: rgba(27, 133, 79, 0.3);
+      border-radius: 50%;
+      filter: blur(100px);
+    }
+
+    .gradient-green-dark {
+      position: absolute;
+      top: 72px;
+      left: 0;
+      width: 209px;
+      height: 319px;
+      background: rgba(27, 133, 79, 0.4);
+      border-radius: 50%;
+      filter: blur(100px);
+    }
+
+    .profile-content {
+      display: flex;
+      gap: 30px;
+      z-index: 2;
+      flex-shrink: 0;
+    }
+
+    .profile-photo {
+      width: 160px;
+      height: 160px;
+      border-radius: 12px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .profile-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+      gap: 17px;
+      width: 365px;
+      margin-top: 3px;
+      align-items: flex-start;
+    }
+
+    .profile-header {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .profile-name {
+      font-size: 24px;
+      font-weight: 700;
+      color: #000000;
+      margin: 0;
+    }
+
+    .profile-id {
+      font-size: 14px;
+      font-weight: 400;
+      color: #888888;
+      margin: 0;
+    }
+
+    .profile-details {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .detail-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .detail-label {
+      font-weight: 400;
+      color: #666666;
+    }
+
+    .detail-value {
+      font-weight: 600;
+      color: #000000;
+    }
+
+    .department-info {
+      font-size: 13px;
+      color: #888888;
+      line-height: 1.6;
+      margin-top: 5px;
+    }
+
+    .ip-address-badge {
+      background: #1b854f;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: 600;
+      align-self: flex-start;
+      margin-top: 12px;
+      z-index: 3;
+      display: inline-block;
+      width: fit-content;
+    }
+
+    /* ATTENDANCE */
+    .attendance-wrapper {
+      perspective: 1000px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .attendance-flipper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+
+    .attendance-wrapper.flipped .attendance-flipper {
+      transform: rotateY(180deg);
+    }
+
+    .attendance-card {
+      background: linear-gradient(180deg, #FFD54F 0%, #FFC947 100%);
+      border-radius: 20px;
+      padding: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-sizing: border-box;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+    }
+
+    .attendance-front,
+    .attendance-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .attendance-front {
+      z-index: 2;
+      transform: rotateY(0deg);
+    }
+
+    .attendance-back {
+      transform: rotateY(180deg);
+    }
+
+    .timer-section {
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .timer-display {
+      font-size: 32px;
+      font-weight: 700;
+      color: #000000;
+      margin: 0 0 12px 0;
+      letter-spacing: -2.2px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .attendance-btn {
+      width: 100%;
+      border-radius: 25px;
+      border: none;
+      background: #000000;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 0;
+      cursor: pointer;
+      margin-bottom: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .attendance-btn:hover {
+      background: #1a1a1a;
+      transform: translateY(-1px);
+    }
+
+    .checkin-status {
+      font-size: 12px;
+      font-weight: 600;
+      color: #1B854F;
+      margin: 0;
+    }
+
+    .attendance-stats {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stats-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      table-layout: fixed;
+    }
+
+    .stats-table tbody tr {
+      border-bottom: 1px solid #E8E8E8;
+    }
+
+    .stats-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .stat-label {
+      padding: 10px 12px;
+      text-align: left;
+      color: #666666;
+      font-weight: 400;
+      width: 65%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    [dir="rtl"] .stat-label {
+      text-align: right;
+    }
+
+    .stat-value {
+      padding: 10px 12px;
+      text-align: right;
+      color: #000000;
+      font-weight: 700;
+      width: 35%;
+    }
+
+    [dir="rtl"] .stat-value {
+      text-align: left;
+    }
+
+    .attendance-history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      flex-shrink: 0;
+    }
+
+    .attendance-history-header h6 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #000000;
+      margin: 0;
+    }
+
+    .back-btn-attendance {
+      width: 46px;
+      height: 22px;
+      border-radius: 30px;
+      background: #000000;
+      color: #ffffff;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn-attendance:hover {
+      background: #1a1a1a;
+      transform: rotate(-360deg);
+    }
+
+    .attendance-history-table {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 0;
+      flex: 1;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .history-table thead {
+      background: #000000;
+      color: #ffffff;
+    }
+
+    .history-table thead th {
+      padding: 8px 6px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 12px;
+      border-right: 1px solid #333;
+    }
+
+    [dir="rtl"] .history-table thead th {
+      border-right: none;
+      border-left: 1px solid #333;
+    }
+
+    .history-table thead th:first-child {
+      border-top-left-radius: 14px;
+    }
+
+    [dir="rtl"] .history-table thead th:first-child {
+      border-top-left-radius: 0;
+      border-top-right-radius: 14px;
+    }
+
+    .history-table thead th:last-child {
+      border-top-right-radius: 14px;
+      border-right: none;
+    }
+
+    [dir="rtl"] .history-table thead th:last-child {
+      border-top-right-radius: 0;
+      border-top-left-radius: 14px;
+      border-left: none;
+    }
+
+    .history-table tbody tr {
+      border-bottom: 1px solid #E8E8E8;
+    }
+
+    .history-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .history-table tbody td {
+      padding: 8px 6px;
+      text-align: center;
+      color: #666666;
+      font-weight: 500;
+      border-right: 1px solid #E8E8E8;
+    }
+
+    [dir="rtl"] .history-table tbody td {
+      border-right: none;
+      border-left: 1px solid #E8E8E8;
+    }
+
+    .history-table tbody td:last-child {
+      border-right: none;
+    }
+
+    [dir="rtl"] .history-table tbody td:last-child {
+      border-left: none;
+    }
+
+    .history-table tbody tr:hover {
+      background: #f8f8f8;
+    }
+
+    @media (max-width: 1200px) {
+      body {
+        overflow: auto;
+      }
+
+      .page-wrapper {
+        height: auto;
+      }
+
+      .lower-grid {
+        grid-template-columns: 1fr;
+        row-gap: 10px;
+        height: auto;
+      }
+
+      .notification-wrapper,
+      .attendance-wrapper {
+        height: 310px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-wrapper">
+    <header class="header">
+      <div class="logo">
+        <img src="/logo.png" alt="Logo" />
+      </div>
+      <div class="header-right">
+        <div class="language-dropdown">
+          <button class="language-selector" onclick="toggleLanguageDropdown()">
+            <img src="/en.png" id="lang-flag" style="height: 18px; width: 18px;" alt="Flag" />
+            <span id="selected-language">English</span>
+            <i class="fas fa-chevron-down" style="font-size:10px;"></i>
+          </button>
+
+          <div class="language-menu" id="languageMenu">
+            <div class="language-option" onclick="switchLanguage('en')">
+              <img src="/en.png" style="height: 18px; width: 18px;" alt="English" />
+              <span>English</span>
+            </div>
+            <div class="language-option" onclick="switchLanguage('ar')">
+              <img src="/ar.png" style="height: 18px; width: 18px;" alt="Arabic" />
+              <span>عربي</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="circle-btn">
+          <img src="/send_mail.svg" style="height: 14px; width: 14px;" alt="Mail" />
+        </button>
+        <button class="circle-btn">
+          <img src="/question_mark.svg" style="height: 18px; width: 18px;" alt="Help" />
+        </button>
+        <button class="enquiry-btn" data-translate="enquiry">Make an Enquiry</button>
+      </div>
+    </header>
+
+    <section>
+      <div class="hero-wrapper">
+        <div class="hero-bg"></div>
+        <div class="hero-left">
+          <p data-translate="welcome">Welcome to</p>
+          <h1 data-translate="university">Zayed Military University</h1>
+          <div class="hero-dots">
+            <div class="hero-dot active"></div>
+            <div class="hero-dot"></div>
+            <div class="hero-dot"></div>
+          </div>
+        </div>
+        <div class="hero-arrows">
+          <button class="hero-arrow"><i class="fas fa-arrow-left"></i></button>
+          <button class="hero-arrow gold"><i class="fas fa-arrow-right"></i></button>
+        </div>
+        <button class="applications-btn" data-translate="applications">Your Applications</button>
+      </div>
+
+      <div class="quick-strip">
+        <button class="quick-arrow"><i class="fas fa-arrow-left"></i></button>
+        <div class="quick-cards">
+          <div class="quick-card">
+            <div class="quick-icon"><i class="fas fa-user"></i></div>
+            <div data-translate="taaqud">Taaqud</div>
+          </div>
+          <div class="quick-card">
+            <div class="quick-icon"><i class="fas fa-calendar"></i></div>
+            <div data-translate="taaqud_emd">Taaqud EMD</div>
+          </div>
+          <div class="quick-card">
+            <div class="quick-icon"><i class="fas fa-desktop"></i></div>
+            <div data-translate="cams">CAMS</div>
+          </div>
+          <div class="quick-card">
+            <div class="quick-icon"><i class="fas fa-sign-in-alt"></i></div>
+            <div data-translate="central_login">Central Login</div>
+          </div>
+        </div>
+        <button class="quick-arrow"><i class="fas fa-arrow-right"></i></button>
+      </div>
+    </section>
+
+    <section class="lower-grid">
+      <div class="notification-wrapper">
+        <div class="notification-flipper">
+          <div class="notification-card notification-front">
+            <div class="notification-icon">
+              <i class="far fa-bell"></i>
+            </div>
+            <div class="notification-content">
+              <h6 data-translate="new_notifications">New notifications available</h6>
+              <div class="notification-badge">5</div>
+              <button class="view-notifications-btn" data-translate="view_notifications" onclick="flipNotificationCard()">View Notifications</button>
+            </div>
+          </div>
+
+          <div class="notification-card notification-back">
+            <div class="notifications-header">
+              <h6 data-translate="notifications">Notifications</h6>
+              <button class="back-btn" onclick="flipNotificationCard()">
+                <i class="fas fa-undo"></i>
+              </button>
+            </div>
+            <div class="notifications-list">
+              <div class="notification-item">
+                <div class="notif-icon-small"><i class="fas fa-passport"></i></div>
+                <span data-translate="passport_expired">Passport Expired (5)</span>
+              </div>
+              <div class="notification-item">
+                <div class="notif-icon-small"><i class="fas fa-envelope"></i></div>
+                <span data-translate="email_expired">Email Expired (5)</span>
+              </div>
+              <div class="notification-item">
+                <div class="notif-icon-small"><i class="fas fa-passport"></i></div>
+                <span data-translate="passport_renew">Passport Expired-please renew</span>
+              </div>
+              <div class="notification-item">
+                <div class="notif-icon-small"><i class="fas fa-clock"></i></div>
+                <span data-translate="approval_pending">Approval Pending (5)</span>
+              </div>
+              <div class="notification-item">
+                <div class="notif-icon-small"><i class="fas fa-id-card"></i></div>
+                <span data-translate="visa_expired">Visa Expired</span>
+              </div>
+              <div class="notification-item">
+                <div class="notif-icon-small"><i class="fas fa-calendar-check"></i></div>
+                <span data-translate="leave_request">Leave Request Approval needed (5)</span>
+              </div>
+              <div class="notification-item">
+                <div class="notif-icon-small"><i class="fas fa-file-upload"></i></div>
+                <span data-translate="document_upload">Document Upload Pending</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-container">
+        <div class="gradient-background">
+          <div class="gradient-yellow"></div>
+          <div class="gradient-red"></div>
+          <div class="gradient-green-light"></div>
+          <div class="gradient-green-dark"></div>
+        </div>
+
+        <div class="profile-content">
+          <div class="profile-photo">
+            <img src="/profile.png" alt="John Doe">
+          </div>
+          <div class="profile-info">
+            <div class="profile-header">
+              <h2 class="profile-name" data-translate="name">John Doe</h2>
+              <p class="profile-id">Gal Civilian 100041414</p>
+            </div>
+
+            <div class="profile-details">
+              <div class="detail-row">
+                <span class="detail-label" data-translate="officer">Officer:</span>
+                <span class="detail-value" data-translate="it_admin">IT Administration</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label" data-translate="phone">Phone:</span>
+                <span class="detail-value">0555268358</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label" data-translate="email">Email:</span>
+                <span class="detail-value">example@gmail.com</span>
+              </div>
+            </div>
+
+            <div class="department-info" data-translate="department">
+              Ministry of Defence/Zayed Military university/Support<br>
+              Services Directorate/IT Department/ICT
+            </div>
+
+            <div class="ip-address-badge" data-translate="ip_address">IP Address: 1</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="attendance-wrapper">
+        <div class="attendance-flipper">
+          <div class="attendance-card attendance-front">
+            <div class="timer-section">
+              <h2 class="timer-display">00:00:00</h2>
+              <button class="attendance-btn" data-translate="view_attendance" onclick="flipAttendanceCard()">View Attendance</button>
+              <div class="checkin-status" data-translate="checkin">Check-In 0 : 0</div>
+            </div>
+
+            <div class="attendance-stats">
+              <table class="stats-table">
+                <tbody>
+                  <tr>
+                    <td class="stat-label" data-translate="late_early">Late In/Early Out</td>
+                    <td class="stat-value">0/60</td>
+                  </tr>
+                  <tr>
+                    <td class="stat-label" data-translate="approved_min">Approved (Min)</td>
+                    <td class="stat-value">0 min</td>
+                  </tr>
+                  <tr>
+                    <td class="stat-label" data-translate="non_approved">Non-Approved (Min)</td>
+                    <td class="stat-value">0 min</td>
+                  </tr>
+                  <tr>
+                    <td class="stat-label" data-translate="missed_punch">Missed Punch</td>
+                    <td class="stat-value">0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="attendance-card attendance-back">
+            <div class="attendance-history-header">
+              <h6 data-translate="last_7_days">Last 7 Days Attendance</h6>
+              <button class="back-btn-attendance" onclick="flipAttendanceCard()">
+                <i class="fas fa-undo"></i>
+              </button>
+            </div>
+            <div class="attendance-history-table">
+              <table class="history-table">
+                <thead>
+                  <tr>
+                    <th data-translate="date">Date</th>
+                    <th data-translate="checkin_time">Check-In</th>
+                    <th data-translate="checkout_time">Check-Out</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>10-12-2025</td>
+                    <td>08:01</td>
+                    <td>17:10</td>
+                  </tr>
+                  <tr>
+                    <td>10-12-2025</td>
+                    <td>08:01</td>
+                    <td>17:10</td>
+                  </tr>
+                  <tr>
+                    <td>10-12-2025</td>
+                    <td>08:01</td>
+                    <td>17:10</td>
+                  </tr>
+                  <tr>
+                    <td>10-12-2025</td>
+                    <td>08:01</td>
+                    <td>17:10</td>
+                  </tr>
+                  <tr>
+                    <td>10-12-2025</td>
+                    <td>08:01</td>
+                    <td>17:10</td>
+                  </tr>
+                  <tr>
+                    <td>10-12-2025</td>
+                    <td>08:01</td>
+                    <td>17:10</td>
+                  </tr>
+                  <tr>
+                    <td>10-12-2025</td>
+                    <td>08:01</td>
+                    <td>17:10</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+  <script>
+    const translations = {
+      en: {
+        welcome: "Welcome to",
+        university: "Zayed Military University",
+        applications: "Your Applications",
+        taaqud: "Taaqud",
+        taaqud_emd: "Taaqud EMD",
+        cams: "CAMS",
+        central_login: "Central Login",
+        new_notifications: "New notifications available",
+        view_notifications: "View Notifications",
+        notifications: "Notifications",
+        passport_expired: "Passport Expired (5)",
+        email_expired: "Email Expired (5)",
+        passport_renew: "Passport Expired-please renew",
+        approval_pending: "Approval Pending (5)",
+        visa_expired: "Visa Expired",
+        leave_request: "Leave Request Approval needed (5)",
+        document_upload: "Document Upload Pending",
+        name: "John Doe",
+        officer: "Officer:",
+        it_admin: "IT Administration",
+        phone: "Phone:",
+        email: "Email:",
+        department: "Ministry of Defence/Zayed Military university/Support Services Directorate/IT Department/ICT",
+        ip_address: "IP Address: 1",
+        view_attendance: "View Attendance",
+        checkin: "Check-In 0 : 0",
+        late_early: "Late In/Early Out",
+        approved_min: "Approved (Min)",
+        non_approved: "Non-Approved (Min)",
+        missed_punch: "Missed Punch",
+        last_7_days: "Last 7 Days Attendance",
+        date: "Date",
+        checkin_time: "Check-In",
+        checkout_time: "Check-Out",
+        enquiry: "Make an Enquiry"
+      },
+      ar: {
+        welcome: "مرحبا بك في",
+        university: "جامعة زايد العسكرية",
+        applications: "طلباتك",
+        taaqud: "تعقد",
+        taaqud_emd: "تعقد EMD",
+        cams: "CAMS",
+        central_login: "تسجيل الدخول المركزي",
+        new_notifications: "إشعارات جديدة متاحة",
+        view_notifications: "عرض الإشعارات",
+        notifications: "الإشعارات",
+        passport_expired: "جواز السفر منتهي الصلاحية (5)",
+        email_expired: "البريد الإلكتروني منتهي الصلاحية (5)",
+        passport_renew: "جواز السفر منتهي الصلاحية - يرجى التجديد",
+        approval_pending: "الموافقة معلقة (5)",
+        visa_expired: "التأشيرة منتهية الصلاحية",
+        leave_request: "طلب إجازة يحتاج إلى موافقة (5)",
+        document_upload: "تحميل المستند معلق",
+        name: "جون دو",
+        officer: "الضابط:",
+        it_admin: "إدارة تكنولوجيا المعلومات",
+        phone: "الهاتف:",
+        email: "البريد الإلكتروني:",
+        department: "وزارة الدفاع/جامعة زايد العسكرية/مديرية الخدمات الداعمة/قسم تكنولوجيا المعلومات/ICT",
+        ip_address: "عنوان IP: 1",
+        view_attendance: "عرض الحضور",
+        checkin: "تسجيل الدخول 0 : 0",
+        late_early: "متأخر في الدخول/مبكر في الخروج",
+        approved_min: "موافق عليه (دقيقة)",
+        non_approved: "غير موافق عليه (دقيقة)",
+        missed_punch: "ضربة مفقودة",
+        last_7_days: "حضور آخر 7 أيام",
+        date: "التاريخ",
+        checkin_time: "تسجيل الدخول",
+        checkout_time: "تسجيل الخروج",
+        enquiry: "إجراء استفسار"
+      }
+    };
+
+    let currentLang = 'en';
+
+    function switchLanguage(lang) {
+      currentLang = lang;
+      const htmlTag = document.documentElement;
+      const bodyTag = document.body;
+
+      if (lang === 'ar') {
+        htmlTag.setAttribute('lang', 'ar');
+        htmlTag.setAttribute('dir', 'rtl');
+        bodyTag.setAttribute('dir', 'rtl');
+        document.getElementById('lang-flag').src = '/ar.png';
+        document.getElementById('selected-language').textContent = 'عربي';
+      } else {
+        htmlTag.setAttribute('lang', 'en');
+        htmlTag.setAttribute('dir', 'ltr');
+        bodyTag.setAttribute('dir', 'ltr');
+        document.getElementById('lang-flag').src = '/en.png';
+        document.getElementById('selected-language').textContent = 'English';
+      }
+
+      translatePage(lang);
+      document.getElementById('languageMenu').classList.remove('active');
+    }
+
+    function translatePage(lang) {
+      document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (translations[lang][key]) {
+          if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+            element.placeholder = translations[lang][key];
+          } else {
+            element.textContent = translations[lang][key];
+          }
+        }
+      });
+    }
+
+    function flipNotificationCard() {
+      const wrapper = document.querySelector('.notification-wrapper');
+      wrapper.classList.toggle('flipped');
+    }
+
+    function flipAttendanceCard() {
+      const wrapper = document.querySelector('.attendance-wrapper');
+      wrapper.classList.toggle('flipped');
+    }
+
+    function toggleLanguageDropdown() {
+      const menu = document.getElementById('languageMenu');
+      menu.classList.toggle('active');
+    }
+
+    document.addEventListener('click', function (event) {
+      const dropdown = document.querySelector('.language-dropdown');
+      if (!dropdown.contains(event.target)) {
+        document.getElementById('languageMenu').classList.remove('active');
+      }
+    });
+  </script>
+</body>
+
+</html>
